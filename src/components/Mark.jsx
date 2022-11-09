@@ -22,7 +22,7 @@ export const Mark = ({ book, mark }) => {
   const save = () => {
     if (isEditing) {
       mark.image = imgRef.current.value;
-      if (mark.image == '') {
+      if (mark.image === '') {
         mark.image = nobook;
       } else {
         mark.image = imgRef.current.value;
