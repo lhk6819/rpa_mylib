@@ -6,7 +6,7 @@ function App() {
   const { data, addBook } = useData();
 
   return (
-    <div className='bg-cyan-100x h-screen w-full overflow-y-hidden overflow-x-scroll'>
+    <div className='bg-gray-300 h-screen w-full overflow-y-hidden overflow-x-scroll scroll-smooth'>
       <header>
         <Nav />
       </header>
@@ -25,9 +25,9 @@ function App() {
             ) : (
               <button
                 onClick={addBook}
-                className='mr-2 w-64 rounded-sm bg-cyan-400 px-5 py-1 font-medium text-white hover:bg-cyan-500'
+                className='mr-2 w-64 rounded-sm bg-gray-500 px-5 py-1 font-medium text-white hover:bg-orange-500'
               >
-                + Add Book
+                + Add Bookcage
               </button>
             )}
           </div>

@@ -1,5 +1,10 @@
-import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline';
+import {
+  TrashIcon,
+  PencilSquareIcon,
+  ArrowUturnLeftIcon,
+} from '@heroicons/react/24/outline';
 import { useEffect, useReducer, useRef, useState } from 'react';
+import ky from 'ky';
 import { useData } from '../hooks/data-context';
 import nobook from '../assets/nobook1.png';
 
@@ -7,20 +12,28 @@ export const Mark = ({ book, mark }) => {
   const { saveMark, removeMark } = useData();
   const [isEditing, toggleEditing] = useReducer((pre) => !pre, !mark.id);
   const [isHovering, setIsHovering] = useState(false);
+  // !
   const imgRef = useRef();
   const titleRef = useRef();
   const desRef = useRef();
 
+  const scrapOg = async (url) => {
+    return await ky(`https://sz.topician.com/sz/proxy?url=${url}`).json();
+  };
+  // !
   const handleMouseOver = () => {
     setIsHovering(true);
   };
-
+  // !
   const handleMouseOut = () => {
     setIsHovering(false);
   };
 
-  const save = () => {
+  const save = (evt) => {
+    evt.stopPropagation();
+
     if (isEditing) {
+      const url = urlRef.current.value;
       mark.image = imgRef.current.value;
       if (mark.image === '') {
         mark.image = nobook;
@@ -30,20 +43,32 @@ export const Mark = ({ book, mark }) => {
       mark.title = titleRef.current.value;
       mark.description = desRef.current.value;
       mark.url = imgRef.current.value;
-      saveMark(book, mark);
+      scrapOg(url)
+        .then((ogRet) => {
+          console.log('ogRet>>>', ogRet);
+          mark.title = ogRet.title || 'No Title';
+          mark.image = ogRet.image;
+          mark.description = ogRet.description;
+          saveMark(book, mark);
+        })
+        .catch((error) => {
+          mark.title = 'ERROR!! ' + error.message;
+          mark.description = 'Please remove this!';
+          saveMark(book, mark);
+        });
     }
     toggleEditing();
   };
 
   useEffect(() => {
-    if (imgRef.current) imgRef.current.value = mark.image;
+    if (imgRef.current) imgRef.current.value = mark.image || 'https://lhk6819.github.io/rpa_mylib';
     if (titleRef.current) titleRef.current.value = mark.title;
     if (desRef.current) desRef.current.value = mark.description;
   }, [isEditing]);
 
   return (
     <div
-      className='mb-1 box-border border-2 border-cyan-400 bg-local p-1'
+      className='mb-1 box-border bg-local p-1'
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
@@ -74,7 +99,7 @@ export const Mark = ({ book, mark }) => {
             <img
               src={mark.image}
               alt={mark.title}
-              className='max-h-[200px] w-full p-1.5'
+              className='max-h-[220px] w-full px-1 pt-1'
             ></img>
           )}
         </div>
@@ -84,16 +109,27 @@ export const Mark = ({ book, mark }) => {
         <div className='item-center mr-3 flex justify-end'>
           <button
             onClick={save}
-            className='mb-1 mr-1 rounded-full bg-cyan-400 p-2 hover:bg-cyan-500'
+            className='mt-2 mr-2 rounded-full bg-cyan-400 p-2 hover:bg-cyan-500'
           >
             <PencilSquareIcon className='h-4 text-white' />
           </button>
           <button
             onClick={() => removeMark(book, mark.id)}
-            className='mb-1 rounded-full bg-rose-400 p-2 hover:bg-rose-500'
+            className='mt-2 rounded-full bg-rose-400 p-2 hover:bg-rose-500'
           >
             <TrashIcon className='h-4 text-white' />
           </button>
+          {isEditing && (
+            <button
+              onClick={(evt) => {
+                evt.stopPropagation();
+                toggleEditing();
+              }}
+              className='mx-1 mb-1 rounded-full bg-slate-300 p-2 hover:bg-slate-500'
+            >
+              <ArrowUturnLeftIcon className='h-4 text-white' />
+            </button>
+          )}
         </div>
       )}
     </div>
