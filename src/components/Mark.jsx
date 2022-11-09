@@ -52,7 +52,7 @@ export const Mark = ({ book, mark }) => {
           saveMark(book, mark);
         })
         .catch((error) => {
-          mark.image = ogRet.image || nobook;
+          mark.image = nobook;
           mark.title = 'ERROR!! ' + error.message;
           mark.description = 'Please remove this!';
           saveMark(book, mark);

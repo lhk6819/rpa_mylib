@@ -7,10 +7,10 @@ function App() {
 
   return (
     <div className='bg-gray-300 h-screen w-full overflow-y-hidden overflow-x-scroll scroll-smooth'>
-      <header>
+      <header className='fixed top-0 left-0'>
         <Nav />
       </header>
-      <main>
+      <main className='mt-14'>
         <div className='flex items-start p-4'>
           {data.books
             .sort((a, b) =>
@@ -25,7 +25,7 @@ function App() {
             ) : (
               <button
                 onClick={addBook}
-                className='mr-2 w-64 rounded-sm bg-gray-500 px-5 py-1 font-medium text-white hover:bg-orange-500'
+                className='mr-2 w-64 h-[42px] rounded-sm bg-gray-500 px-5 py-1 font-bold text-white hover:bg-orange-500'
               >
                 + Add Bookcage
               </button>
@@ -34,8 +34,8 @@ function App() {
         </div>
       </main>
 
-      <footer className='text-center text-slate-500'>
-        Copyright Indiflex Senior Coding 2022
+      <footer className='text-center fixed right-4 bottom-12 text-slate-500'>
+        Copyright Project Fire 2022
       </footer>
     </div>
   );

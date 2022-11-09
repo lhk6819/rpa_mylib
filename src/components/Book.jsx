@@ -15,7 +15,7 @@ export const Book = ({ book }) => {
   };
 
   return (
-    <div className='mr-3 w-64 flex-shrink-0 rounded bg-gray-500 p-1.5'>
+    <div className='mr-3 w-64 flex-shrink-0 rounded bg-gray-500 p-1.5 snap-start'>
       <div className='flex items-center justify-between text-xl font-bold text-white mb-1'>
         <h3 className='pl-2 pt-1 truncate'>{book?.title}</h3>
         <button
