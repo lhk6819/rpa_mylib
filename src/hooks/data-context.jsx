@@ -67,6 +67,7 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem(SKEY)) || SampleData
   );
   const [searchStr, setSearchStr] = useState('');
+  const [compleStr, setCompleStr] = useState('');
 
   const addBook = () => {
     dispatch({ type: 'add' });
@@ -109,7 +110,7 @@ export const DataProvider = ({ children }) => {
       return;
     }
   };
-
+  
   return (
     <DataContext.Provider
       value={{

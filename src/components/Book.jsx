@@ -25,31 +25,31 @@ export const Book = ({ book }) => {
           {isEditing ? (
             <ArrowPathIcon className='w-5 text-gray-300' />
           ) : (
-            <Cog8ToothIcon className='w-5 text-gray-300' />
+            <Cog8ToothIcon className='mr-1 w-5 text-gray-300' />
           )}
         </button>
       </div>
-      <div className='h-[66vh] scroll-smooth xs:h-[68vh] sm:h-[70vh] md:h-[72vh] xl:h-[74vh] overflow-y-scroll scrollbar-hide'>
+      <div className='h-[62vh] scroll-smooth xs:h-[64vh] sm:h-[66vh] md:h-[68vh] xl:h-[70vh] overflow-y-scroll scrollbar-hide'>
         {book?.id === 0 || isEditing ? (
           <div className='p-1.5'>
             <input
               type='text'
               value={bookTitle}
               onChange={(evt) => setBookTitle(evt.target.value)}
-              className='w-full rounded px-1'
-              placeholder='타이틀...'
+              className='mt-4 w-full h-[3vh] rounded px-1 text-right'
+              placeholder='New Bookcage '
             />
             <button
               onClick={() => removeBook(book.id)}
-              className='float-left text-rose-400 hover:text-rose-600'
+              className='ml-2 mt-2 float-right text-rose-400 hover:text-rose-600'
             >
-              Remove
+              삭제
             </button>
             <button
               onClick={changeBookTitle}
-              className='float-right text-cyan-400 hover:text-cyan-600'
+              className='mt-2 float-right text-cyan-400 hover:text-cyan-600'
             >
-              Save
+              저장/수정
             </button>
           </div>
         ) : book?.marks?.length ? (
@@ -69,7 +69,7 @@ export const Book = ({ book }) => {
       ) : (
         <button
           onClick={() => addMark(book)}
-          className='float-right mt-2 mb-1 mr-2 rounded-sm bg-gray-300 px-4 py-1 font-medium text-slate hover:bg-orange-500'
+          className='float-right mt-2 mb-1 mr-1.5 rounded-sm bg-gray-300 px-4 py-1 font-medium text-slate hover:bg-orange-500'
         >
           + Add Book
         </button>

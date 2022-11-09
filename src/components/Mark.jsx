@@ -2,6 +2,8 @@ import {
   TrashIcon,
   PencilSquareIcon,
   ArrowUturnLeftIcon,
+  DocumentIcon,
+  DocumentCheckIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import ky from 'ky';
@@ -9,9 +11,10 @@ import { useData } from '../hooks/data-context';
 import nobook from '../assets/nobook1.png';
 
 export const Mark = ({ book, mark }) => {
-  const { saveMark, removeMark } = useData();
+  const { saveMark, removeMark, filterComple, filterNotComple } = useData();
   const [isEditing, toggleEditing] = useReducer((pre) => !pre, !mark.id);
   const [isHovering, setIsHovering] = useState(false);
+  const [isComple, buttonEditing] = useReducer((pre) => !pre, !mark.complete);
   // !
   const imgRef = useRef();
   const titleRef = useRef();
@@ -27,6 +30,13 @@ export const Mark = ({ book, mark }) => {
   // !
   const handleMouseOut = () => {
     setIsHovering(false);
+  };
+
+  const complete = (evt) => {
+    evt.stopPropagation();
+    mark.complete = !mark.complete;
+    buttonEditing();
+    console.log('mark.complete:', mark.id, mark.complete);
   };
 
   const save = (evt) => {
@@ -100,7 +110,7 @@ export const Mark = ({ book, mark }) => {
             <img
               src={mark.image}
               alt={mark.title}
-              className='max-h-[220px] w-full px-1 pt-1'
+              className='max-h-[220px] w-full px-1 pt-1 rounded-lg'
             ></img>
           )}
         </div>
@@ -108,6 +118,16 @@ export const Mark = ({ book, mark }) => {
 
       {isHovering && (
         <div className='item-center mr-3 flex justify-end'>
+          <button
+            onClick={complete}
+            className='mt-2 mr-2 rounded-full bg-cyan-400 p-2 hover:bg-cyan-500'
+          >
+            {isComple ? (
+              <DocumentCheckIcon className='h-4 text-white' />
+            ) : (
+              <DocumentIcon className='h-4 text-white' />
+            )}
+          </button>
           <button
             onClick={save}
             className='mt-2 mr-2 rounded-full bg-cyan-400 p-2 hover:bg-cyan-500'

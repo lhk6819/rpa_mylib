@@ -1,9 +1,13 @@
 // import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/outline';
 import { BookOpenIcon } from '@heroicons/react/24/outline';
 import { useData } from '../hooks/data-context';
+import { useToggleSlider } from 'react-toggle-slider';
 
 export const Nav = () => {
   const { searchStr, setSearchStr } = useData();
+  const [ToggleSlider, active] = useToggleSlider({
+    barBackgroundColorActive: 'skyblue',
+  });
 
   return (
     <nav className='flex justify-between px-2'>
@@ -14,11 +18,14 @@ export const Nav = () => {
         </div>
       </div>
       <div>
+        <toggleSlider className='fixed right-20 top-7 h-12 w-40'>
+          {ToggleSlider}다 읽은 책{active ? '은 제외' : '도 표시'}
+        </toggleSlider>
         <input
           type='text'
           value={searchStr}
           onChange={(evt) => setSearchStr(evt.target.value)}
-          placeholder='검색'
+          placeholder='검색 '
           className='fixed right-6 top-6 h-8 w-40  rounded-sm text-right border border-slate-300 px-2'
         />
       </div>
