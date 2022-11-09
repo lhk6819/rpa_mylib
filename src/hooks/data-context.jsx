@@ -6,7 +6,7 @@ const SampleData = {
   books: [
     {
       id: 1,
-      title: 'My Private Book',
+      title: 'Favorite',
       marks: [],
     },
   ],
