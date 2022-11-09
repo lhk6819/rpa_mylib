@@ -33,7 +33,7 @@ export const Mark = ({ book, mark }) => {
     evt.stopPropagation();
 
     if (isEditing) {
-      const url = urlRef.current.value;
+      const url = imgRef.current.value;
       mark.image = imgRef.current.value;
       if (mark.image === '') {
         mark.image = nobook;
@@ -48,10 +48,11 @@ export const Mark = ({ book, mark }) => {
           console.log('ogRet>>>', ogRet);
           mark.title = ogRet.title || 'No Title';
           mark.image = ogRet.image;
-          mark.description = ogRet.description;
+          // mark.description = ;
           saveMark(book, mark);
         })
         .catch((error) => {
+          mark.image = ogRet.image || nobook;
           mark.title = 'ERROR!! ' + error.message;
           mark.description = 'Please remove this!';
           saveMark(book, mark);
@@ -115,7 +116,7 @@ export const Mark = ({ book, mark }) => {
           </button>
           <button
             onClick={() => removeMark(book, mark.id)}
-            className='mt-2 rounded-full bg-rose-400 p-2 hover:bg-rose-500'
+            className='mt-2 mr-2 rounded-full bg-rose-400 p-2 hover:bg-rose-500'
           >
             <TrashIcon className='h-4 text-white' />
           </button>
@@ -125,7 +126,7 @@ export const Mark = ({ book, mark }) => {
                 evt.stopPropagation();
                 toggleEditing();
               }}
-              className='mx-1 mb-1 rounded-full bg-slate-300 p-2 hover:bg-slate-500'
+              className='mt-2 rounded-full bg-slate-300 p-2 hover:bg-slate-500'
             >
               <ArrowUturnLeftIcon className='h-4 text-white' />
             </button>

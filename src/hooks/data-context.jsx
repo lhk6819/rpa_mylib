@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useState } from 'react';
 
 const SKEY = 'mipdata';
 
@@ -66,6 +66,8 @@ export const DataProvider = ({ children }) => {
     reducer,
     JSON.parse(localStorage.getItem(SKEY)) || SampleData
   );
+  const [searchStr, setSearchStr] = useState('');
+
   const addBook = () => {
     dispatch({ type: 'add' });
   };
@@ -118,6 +120,8 @@ export const DataProvider = ({ children }) => {
         addMark,
         saveMark,
         removeMark,
+        searchStr,
+        setSearchStr,
       }}
     >
       {children}
