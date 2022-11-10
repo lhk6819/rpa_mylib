@@ -7,7 +7,7 @@ const SampleData = {
     {
       id: 1,
       title: 'Favorite',
-      marks: [],
+      marks: [{ id: 1, title: 'life inside', image: null, isComple: false }],
     },
   ],
 };
@@ -67,7 +67,7 @@ export const DataProvider = ({ children }) => {
     JSON.parse(localStorage.getItem(SKEY)) || SampleData
   );
   const [searchStr, setSearchStr] = useState('');
-  const [compleStr, setCompleStr] = useState('');
+  const [searchComple, setSearchComple] = useState(false);
 
   const addBook = () => {
     dispatch({ type: 'add' });
@@ -110,7 +110,7 @@ export const DataProvider = ({ children }) => {
       return;
     }
   };
-  
+
   return (
     <DataContext.Provider
       value={{
@@ -123,6 +123,8 @@ export const DataProvider = ({ children }) => {
         removeMark,
         searchStr,
         setSearchStr,
+        searchComple,
+        setSearchComple,
       }}
     >
       {children}

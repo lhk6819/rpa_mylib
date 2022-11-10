@@ -4,7 +4,7 @@ import { Mark } from './Mark';
 import { useData } from '../hooks/data-context';
 
 export const Book = ({ book }) => {
-  const { saveBook, removeBook, addMark, searchStr } = useData();
+  const { saveBook, removeBook, addMark, searchStr, searchComple } = useData();
   const [bookTitle, setBookTitle] = useState(book.title);
   const [isEditing, toggleEditing] = useReducer((pre) => !pre, false);
 
@@ -53,13 +53,24 @@ export const Book = ({ book }) => {
             </button>
           </div>
         ) : book?.marks?.length ? (
-          book?.marks
-            .filter((mark) =>
-              RegExp(searchStr, 'i').exec(
-                `${mark.url} ${mark.title} ${mark.description}`
+          !searchComple ? (
+            book?.marks
+              .filter((mark) =>
+                RegExp(searchStr, 'i').exec(
+                  `${mark.url} ${mark.title} ${mark.description}`
+                )
               )
-            )
-            .map((mark) => <Mark key={mark.id} book={book} mark={mark} />)
+              .map((mark) => <Mark key={mark.id} book={book} mark={mark} />)
+          ) : (
+            book?.marks
+              .filter((mark) => mark.isComple === true)
+              .filter((mark) =>
+                RegExp(searchStr, 'i').exec(
+                  `${mark.url} ${mark.title} ${mark.description}`
+                )
+              )
+              .map((mark) => <Mark key={mark.id} book={book} mark={mark} />)
+          )
         ) : (
           <hr className='border-3 mt-0 mb-3 border-white' />
         )}

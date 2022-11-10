@@ -2,12 +2,10 @@
 import { BookOpenIcon } from '@heroicons/react/24/outline';
 import { useData } from '../hooks/data-context';
 import { useToggleSlider } from 'react-toggle-slider';
+import { useEffect } from 'react';
 
 export const Nav = () => {
-  const { searchStr, setSearchStr } = useData();
-  const [ToggleSlider, active] = useToggleSlider({
-    barBackgroundColorActive: 'skyblue',
-  });
+  const { searchStr, setSearchStr, searchComple, setSearchComple } = useData();
 
   return (
     <nav className='flex justify-between px-2'>
@@ -18,9 +16,19 @@ export const Nav = () => {
         </div>
       </div>
       <div>
-        <toggleSlider className='fixed right-20 top-7 h-12 w-40'>
-          {ToggleSlider}다 읽은 책{active ? '은 제외' : '도 표시'}
-        </toggleSlider>
+        <label
+          for='disabled-toggle'
+          class='inline-flex relative items-center mb-5 cursor-pointer'
+        >
+          <input
+            type='checkbox'
+            onChange={() => setSearchComple(!searchComple)}
+            value={searchComple}
+            id='disabled-toggle'
+            class='sr-only peer'
+          />
+          <div class="fixed right-[200px] top-7 w-11 h-6 bg-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-rose-600"></div>
+        </label>
         <input
           type='text'
           value={searchStr}

@@ -34,7 +34,7 @@ function App() {
         </div>
       </main>
 
-      <footer className='text-center fixed right-4 bottom-12 text-slate-500'>
+      <footer className='text-center fixed right-4 bottom-6 text-slate-500'>
         Copyright Project Fire 2022
       </footer>
     </div>

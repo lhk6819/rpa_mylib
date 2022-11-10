@@ -14,7 +14,6 @@ export const Mark = ({ book, mark }) => {
   const { saveMark, removeMark, filterComple, filterNotComple } = useData();
   const [isEditing, toggleEditing] = useReducer((pre) => !pre, !mark.id);
   const [isHovering, setIsHovering] = useState(false);
-  const [isComple, buttonEditing] = useReducer((pre) => !pre, !mark.complete);
   // !
   const imgRef = useRef();
   const titleRef = useRef();
@@ -37,6 +36,11 @@ export const Mark = ({ book, mark }) => {
     mark.complete = !mark.complete;
     buttonEditing();
     console.log('mark.complete:', mark.id, mark.complete);
+  };
+
+  const saveComple = () => {
+    mark.isComple = !mark.isComple;
+    saveMark(book, mark);
   };
 
   const save = (evt) => {
@@ -72,7 +76,7 @@ export const Mark = ({ book, mark }) => {
   };
 
   useEffect(() => {
-    if (imgRef.current) imgRef.current.value = mark.image || 'https://lhk6819.github.io/rpa_mylib';
+    if (imgRef.current) imgRef.current.value = mark.image || nobook;
     if (titleRef.current) titleRef.current.value = mark.title;
     if (desRef.current) desRef.current.value = mark.description;
   }, [isEditing]);
@@ -106,26 +110,26 @@ export const Mark = ({ book, mark }) => {
         </>
       ) : (
         <div>
-          {mark.image && (
+          <>
             <img
-              src={mark.image}
+              src={mark.image || nobook}
               alt={mark.title}
               className='max-h-[220px] w-full px-1 pt-1 rounded-lg'
-            ></img>
-          )}
+            />
+          </>
         </div>
       )}
 
       {isHovering && (
         <div className='item-center mr-3 flex justify-end'>
           <button
-            onClick={complete}
+            onClick={saveComple}
             className='mt-2 mr-2 rounded-full bg-cyan-400 p-2 hover:bg-cyan-500'
           >
-            {isComple ? (
-              <DocumentCheckIcon className='h-4 text-white' />
-            ) : (
+            {mark.isComple ? (
               <DocumentIcon className='h-4 text-white' />
+            ) : (
+              <DocumentCheckIcon className='h-4 text-white' />
             )}
           </button>
           <button
